@@ -8,17 +8,19 @@
       <PostsList :posts="posts"></PostsList>
     </div>
     <div v-else>
-      Loading...
+      <Spinner></Spinner>
     </div>
   </div>
 </template>
 
 <script>
+import Spinner from '../components/Spinner'
 import PostsList from '../components/PostsList'
 import getPosts from '@/composables/getPosts';
 
 export default {
-  components: { PostsList },
+  components: {
+    Spinner, PostsList },
   setup() {
     
     let { posts, error, load } = getPosts() // {posts, error, load} will return and its gonna work like object destructing
