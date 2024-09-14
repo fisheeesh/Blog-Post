@@ -8,10 +8,7 @@
       <PostsList :posts="posts"></PostsList>
     </div>
     <div v-else>
-      <button class="btn btn-primary" type="button" disabled>
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        Loading...
-      </button>
+      <Spinner></Spinner>
     </div>
   </div>
 </template>
@@ -23,10 +20,9 @@ import getPosts from '@/composables/getPosts';
 
 export default {
   components: {
-    Spinner, PostsList
-  },
+    Spinner, PostsList },
   setup() {
-
+    
     let { posts, error, load } = getPosts() // {posts, error, load} will return and its gonna work like object destructing
 
     load()
