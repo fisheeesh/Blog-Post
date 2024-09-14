@@ -1,19 +1,28 @@
 {
-    "posts" : [
-        {
-            "id": 1,
-            "title": "Post 1",
-            "body" : "lorem pisum"
-        },
-        {
-            "id": 2,
-            "title": "Post 2",
-            "body" : "lorem pisum"
-        },
-        {
-            "id": 3,
-            "title": "Post 3",
-            "body" : "lorem pisum"
-        }
-    ]
+  "posts": [
+    {
+      "id": "1",
+      "title": "Post 1",
+      "body": "lorem pisum"
+    },
+    {
+      "id": "2",
+      "title": "Post 2",
+      "body": "lorem pisum"
+    },
+    {
+      "id": "3",
+      "title": "Post 3",
+      "body": "lorem pisum"
+    },
+    {
+      "id": "1f5c",
+      "title": "test",
+      "body": "test",
+      "tags": [
+        "webdev",
+        "vuejs"
+      ]
+    }
+  ]
 }

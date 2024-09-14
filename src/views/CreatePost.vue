@@ -1,6 +1,6 @@
 <template>
     <h1>Create Post</h1>
-    <form>
+    <form @submit.prevent="addPost">
         <label for="">Title</label>
         <input type="text" required v-model="title">
         <label>Body</label>
@@ -18,48 +18,72 @@
 import { ref } from 'vue';
 
 export default {
-    setup(){
+    setup() {
         let title = ref('')
         let body = ref('')
         let tag = ref('')
         let tags = ref([])
 
-        let handleKeydown = () =>{
-            if(!tags.value.includes(tag.value) && tag.value){
+        let handleKeydown = () => {
+            if (!tags.value.includes(tag.value) && tag.value) {
                 tag.value = tag.value.replace(/\s/, '')
                 tags.value.push(tag.value)
             }
             tag.value = ''
         }
 
-        return { title, body, tag, handleKeydown, tags }
+        let addPost = async() =>{
+            await fetch('http://localhost:3000/posts', {
+                method : "POST",
+                headers : {"Content-Type" : "application/json"},
+                body : JSON.stringify({
+                    title : title.value,
+                    body : body.value,
+                    tags : tags.value
+                })
+            })
+
+            title.value = ''
+            body.value = ''
+            tags.value = []
+        }
+
+        return { title, body, tag, handleKeydown, tags, addPost }
     }
 }
 </script>
 
 <style>
-form{
+form {
     max-width: 480px;
     margin: 0 auto;
     text-align: left;
 }
-input, textarea{
+
+input,
+textarea {
     display: block;
     margin: 10px 0;
     width: 100%;
     box-sizing: border-box;
     padding: 10px;
-    border: 1px solid #eee
+    border: 1px solid #eee;
 }
-label{
+
+textarea {
+    height: 160px;
+}
+
+label {
     display: inline-block;
     margin-top: 30px;
     position: relative;
     font-size: 20px;
     color: white;
-    margin-bottom: 10px
+    margin-bottom: 10px;
 }
-label::before{
+
+label::before {
     content: "";
     display: block;
     width: 100%;
@@ -71,21 +95,24 @@ label::before{
     left: -30px;
     transform: rotateZ(-1.5deg);
 }
-button{
+
+button {
     display: block;
     margin-top: 30px;
     background: #ff8800;
     color: white;
     border: none;
     padding: 8px 16px;
-    font-size: 18px;
+    font-size: 18px
 }
-.tagContainer{
+
+.tagContainer {
     display: flex;
     flex-wrap: wrap;
     margin-top: 20px;
 }
-.tag{
+
+.tag {
     display: inline-block;
     padding: 10px 15px;
     border: 1px solid black;

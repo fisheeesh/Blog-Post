@@ -20,9 +20,10 @@ import getPosts from '@/composables/getPosts';
 
 export default {
   components: {
-    Spinner, PostsList },
+    Spinner, PostsList
+  },
   setup() {
-    
+
     let { posts, error, load } = getPosts() // {posts, error, load} will return and its gonna work like object destructing
 
     load()
@@ -31,3 +32,10 @@ export default {
   }
 }
 </script>
+<style>
+.home {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+</style>
