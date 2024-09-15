@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import DetailPost from '@/views/DetailPost.vue'
 import NotFound from '@/views/NotFound.vue'
 import CreatePost from '@/views/CreatePost.vue'
+import Tag from '@/views/Tag.vue'
 
 const routes = [
   {
@@ -30,6 +31,12 @@ const routes = [
     path : "/create",
     name : "create",
     component : CreatePost
+  },
+  {
+    path : "/tags/:tag",
+    name : 'tag',
+    component : Tag,
+    props : true
   }
 ]
 
