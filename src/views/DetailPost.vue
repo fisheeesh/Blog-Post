@@ -4,6 +4,9 @@
   <div v-if="post" class="post">
     <h2>{{ post.title }}</h2>
     <p>{{ post.body }}</p>
+    <div v-for="tag in post.tags" :key="tag" class="pill">
+      {{ tag }}
+    </div>
   </div>
   <div v-else>
     <Spinner></Spinner>
@@ -13,11 +16,16 @@
 <script>
 import Spinner from '../components/Spinner'
 import getPost from '@/composables/getPost';
+import { useRoute } from 'vue-router';
+
 export default {
   components: { Spinner },
   props: ['id'],
   setup(props) {
-    let { post, error, load } = getPost(props.id)
+    let route = useRoute() //this.$route
+    console.log(route)
+
+    let { post, error, load } = getPost(route.params.id)
 
     load()
 

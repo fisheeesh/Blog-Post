@@ -28,7 +28,7 @@ import { useRouter } from 'vue-router';
 export default {
     setup() {
         let router = useRouter() //this.$router
-        console.log(router)
+        // console.log(router)
         let title = ref('')
         let body = ref('')
         let tag = ref('')
