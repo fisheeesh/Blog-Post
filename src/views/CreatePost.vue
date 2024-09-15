@@ -16,9 +16,19 @@
 
 <script>
 import { ref } from 'vue';
+/**
+ * to use router with composable api we need to import useRouter function from vue-router
+ * This is the pattern for using router in composable api 
+ * 1 - import useRouter from 'vue-router'
+ * 2 - store it in a variable
+ * after that we can use it like our normal router -> this.$router
+ */
+import { useRouter } from 'vue-router';
 
 export default {
     setup() {
+        let router = useRouter() //this.$router
+        console.log(router)
         let title = ref('')
         let body = ref('')
         let tag = ref('')
@@ -32,20 +42,24 @@ export default {
             tag.value = ''
         }
 
-        let addPost = async() =>{
+        let addPost = async () => {
             await fetch('http://localhost:3000/posts', {
-                method : "POST",
-                headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify({
-                    title : title.value,
-                    body : body.value,
-                    tags : tags.value
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    title: title.value,
+                    body: body.value,
+                    tags: tags.value
                 })
             })
 
             title.value = ''
             body.value = ''
             tags.value = []
+
+
+            //redirect user to home page
+            router.push({ name: 'home' })
         }
 
         return { title, body, tag, handleKeydown, tags, addPost }
