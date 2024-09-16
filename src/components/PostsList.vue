@@ -1,4 +1,5 @@
 <template>
+  <h1>Blog Post</h1>
   <div v-for="post in posts" :key="post.id">
     <SinglePost :post="post"></SinglePost>
   </div>

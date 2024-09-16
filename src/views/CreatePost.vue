@@ -8,7 +8,7 @@
         <label>Tags(hit enter to add a tag)</label>
         <input type="text" v-model="tag" @keydown.enter.prevent="handleKeydown">
         <div class="tagContainer">
-            <p v-for="tag in tags" :key="tag" class="tag">{{ tag }}</p>
+            <p v-for="tag in tags" :key="tag" class="tag">{{ tag }} <span class="cross" @click="deleteTag(tag)">&#10006;</span></p>
         </div>
         <button>Add Post</button>
     </form>
@@ -62,7 +62,11 @@ export default {
             router.push({ name: 'home' })
         }
 
-        return { title, body, tag, handleKeydown, tags, addPost }
+        let deleteTag = (del)=>{
+            tags.value = tags.value.filter(tag => tag !== del)
+        }
+
+        return { title, body, tag, handleKeydown, tags, addPost, deleteTag }
     }
 }
 </script>
@@ -134,5 +138,10 @@ button {
     color: black;
     margin: 0 5px 5px 0;
     font-weight: bold;
+}
+.cross{
+    color: red;
+    margin-left: 15px;
+    cursor: pointer;
 }
 </style>

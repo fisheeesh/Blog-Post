@@ -33,6 +33,15 @@
         "SpringBoot",
         "Java"
       ]
+    },
+    {
+      "id": "ad8f",
+      "title": "world news",
+      "body": "Flood Situation",
+      "tags": [
+        "nes",
+        "news"
+      ]
     }
   ]
 }
