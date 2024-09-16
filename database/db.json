@@ -50,6 +50,15 @@
       "tags": [
         "angular"
       ]
+    },
+    {
+      "id": "242f",
+      "title": "Php Laravel",
+      "body": "SSR - Server-side Rendering",
+      "tags": [
+        "laravel",
+        "php"
+      ]
     }
   ]
 }
