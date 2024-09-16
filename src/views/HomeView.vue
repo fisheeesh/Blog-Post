@@ -5,7 +5,7 @@
     </div>
     <div v-if="posts.length > 0" class="layout">
       <div><PostsList :posts="posts"></PostsList></div>
-      <div><TagCloud></TagCloud></div>
+      <div><TagCloud :posts="posts"></TagCloud></div>
     </div>
     <div v-else>
       <Spinner></Spinner>
