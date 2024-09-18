@@ -1,8 +1,8 @@
 <template>
   <div v-if="error">{{ error }}</div>
-  <div v-if="post">
+  <div v-if="post" style="border: 1px solid #ddd; padding: 30px; border-radius: 5px;">
     <h3>Detail Post of {{ post.title }}</h3>
-    <p>{{ post.body }}</p>
+    <p>Body - {{ post.body }}</p>
     <button class="delete" @click="deletePost">Delete</button>
   </div>
   <div v-else>
