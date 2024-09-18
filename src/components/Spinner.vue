@@ -15,7 +15,7 @@ export default {
     border-radius: 50%;
     border: 3px solid rgb(238, 237, 237);
     margin: 30px auto;
-    border-top-color: #00ce89;
+    border-top-color: crimson;
     animation: spin 1s linear infinite;
 }
 @keyframes spin{

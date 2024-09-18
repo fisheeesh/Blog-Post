@@ -1,20 +1,14 @@
 <template>
-  <div class="home">
-    <div v-if="error">
-      {{ error }}
+  <input type="text" v-model="search" class="search" placeholder="search post...">
+  <div v-if="error">{{ error }}</div>
+  <div v-if="posts.length > 0">
+    <div class="layout">
+      <div><PostsList :posts="searchedPosts"></PostsList></div>
+      <div><TagCloud :posts="posts"></TagCloud></div>
     </div>
-    <div>
-      <input type="text" placeholder="search post..." v-model="search">
-    </div>
-    <div v-if="posts.length > 0" class="layout">
-      <div><PostsList :posts="searchPosts"></PostsList></div>
-      <div>
-        <TagCloud :posts="posts"></TagCloud>
-      </div>
-    </div>
-    <div v-else>
-      <Spinner></Spinner>
-    </div>
+  </div>
+  <div v-else>
+    <Spinner></Spinner>
   </div>
 </template>
 
@@ -24,42 +18,35 @@ import Spinner from '../components/Spinner'
 import PostsList from '../components/PostsList'
 import getPosts from '@/composables/getPosts';
 import { computed, ref } from 'vue';
-
 export default {
   components: {
     TagCloud,
     Spinner, PostsList
   },
   setup() {
-
     let search = ref('')
-
-
-
-    let { posts, error, load } = getPosts() // {posts, error, load} will return and its gonna work like object destructing
+    let { posts, error, load } = getPosts()
 
     load()
 
-    let searchPosts = computed(() => {
+    let searchedPosts = computed(() =>{
       return posts.value.filter(post => {
         return post.title.includes(search.value)
       })
     })
 
-    return { posts, error, search, searchPosts }
+    return { posts, error, search, searchedPosts }
   }
 }
 </script>
-<style>
-.home {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px;
-}
 
+<style>
 .layout {
   display: grid;
   grid-template-columns: 3fr 1fr;
-  gap: 20px;
+  gap: 30px;
+}
+.search{
+  border: 1px solid #ddd;
 }
 </style>

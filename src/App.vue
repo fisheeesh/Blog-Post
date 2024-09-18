@@ -3,11 +3,9 @@
   <router-view/>
 </template>
 <script>
-import NavBar from './components/NavBar.vue';
+import NavBar from './components/NavBar'
 export default {
-  components : {
-    NavBar
-  }
+  components: { NavBar },
   
 }
 </script>
@@ -17,5 +15,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+  max-width: 1200px;
+  margin: 0px auto;
 }
 </style>

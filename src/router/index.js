@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import DetailPost from '@/views/DetailPost.vue'
-import NotFound from '@/views/NotFound.vue'
 import CreatePost from '@/views/CreatePost.vue'
 import Tag from '@/views/Tag.vue'
 
@@ -12,28 +11,18 @@ const routes = [
     component: HomeView
   },
   {
-    path : "/posts/:id",
-    name : "detail",
+    path : '/detail/:id',
+    name : 'detail',
     component : DetailPost,
     props : true
   },
-  //redirect
   {
-    path :'/posts',
-    redirect : "/"
-  },
-  //catchAll
-  {
-    path : "/:catchAll(.*)",
-    component : NotFound
-  },
-  {
-    path : "/create",
-    name : "create",
+    path : '/create',
+    name : 'create',
     component : CreatePost
   },
   {
-    path : "/tags/:tag",
+    path : '/tags/:tag',
     name : 'tag',
     component : Tag,
     props : true

@@ -1,11 +1,13 @@
 <template>
-    <header>
-        <h1>Bloggy Vue</h1>
-        <nav>
-            <router-link :to="{ name: 'home' }">Home</router-link>
-            <router-link :to="{ name: 'create' }">Create</router-link>
-        </nav>
-    </header>
+  <nav class="main-nav">
+    <div>
+      <h1>Bloggy Vue</h1>
+    </div>
+    <div>
+      <router-link :to="{ name: 'home' }">Home</router-link>
+      <router-link :to="{ name: 'create' }">Create</router-link>
+    </div>
+  </nav>
 </template>
 
 <script>
@@ -15,28 +17,22 @@ export default {
 </script>
 
 <style>
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 10px;
+.main-nav{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-
-header h1 {
-    color: #ff8800;
-    font-size: 48px;
+h1{
+  color: crimson;
+  font-weight: bold;
+  font-size: 2.4rem;
 }
-
-header a {
-    color: #bbb;
-    text-decoration: none;
-    margin-left: 20px;
+.main-nav a{
+  margin-left: 15px;
+  color: #aaa;
+  font-weight: bold;
 }
-
-header a.router-link-active {
-    color: #444;
-    font-weight: bold;
+.main-nav a.router-link-active{
+  color: crimson;
 }
 </style>

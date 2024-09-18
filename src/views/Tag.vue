@@ -1,52 +1,39 @@
 <template>
-    <div class="container">
-        <div v-if="error">{{ error }}</div>
-        <div v-if="posts.length" class="layout">
-            <div>
-                <PostsList :posts="filteredPosts"></PostsList>
-            </div>
-            <div>
-                <TagCloud :posts="posts"></TagCloud>
-            </div>
-        </div>
-        <div v-else>
-            <Spinner></Spinner>
-        </div>
-    </div>
+  <div v-if="error">{{ error }}</div>
+  <div v-if="posts.length > 0" class="layout">
+    <div><PostsList :posts="filteredPosts"></PostsList></div>
+    <div><TagCloud :posts="posts"></TagCloud></div>
+  </div>
+  <div v-else>
+    <Spinner></Spinner>
+  </div>
+  
 </template>
 
 <script>
 import TagCloud from '../components/TagCloud'
-import PostsList from '../components/PostsList'
-import { computed } from 'vue';
 import Spinner from '../components/Spinner'
+import PostsList from '../components/PostsList'
 import getPosts from '@/composables/getPosts';
+import { computed } from 'vue';
 export default {
-    components: {
-        TagCloud,
-        PostsList, Spinner
-    },
-    props: ['tag'],
-    setup(props) {
-        let { posts, error, load } = getPosts()
+  props: ['tag'],
+  components: {
+    TagCloud,
+    Spinner, PostsList
+  },
+  setup(props) {
+    let { posts, error, load } = getPosts()
 
-        load()
+    load()
 
-        let filteredPosts = computed(() => {
-            return posts.value.filter(post => {
-                return post.tags.includes(props.tag)
-            })
-        })
+    let filteredPosts = computed(() => {
+      return posts.value.filter(post => post.tags.includes(props.tag))
+    })
 
-        return { posts, error, filteredPosts }
-    }
+    return { posts, error, filteredPosts }
+  }
 }
 </script>
 
-<style>
-.container{
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 10px;
-}
-</style>
+<style></style>

@@ -1,147 +1,135 @@
 <template>
-    <!-- <h1>Create Post</h1> -->
-    <form @submit.prevent="addPost">
-        <label for="">Title</label>
-        <input type="text" required v-model="title">
-        <label>Body</label>
-        <textarea required v-model="body"></textarea>
-        <label>Tags(hit enter to add a tag)</label>
-        <input type="text" v-model="tag" @keydown.enter.prevent="handleKeydown">
-        <div class="tagContainer">
-            <p v-for="tag in tags" :key="tag" class="tag">{{ tag }} <span class="cross" @click="deleteTag(tag)">&#10006;</span></p>
-        </div>
-        <button>Add Post</button>
-    </form>
+  <h3>Create Post</h3>
+  <form @submit.prevent="addPost">
+    <label>Title</label>
+    <input type="text" v-model="title">
+    <label>Body</label>
+    <textarea v-model="body"></textarea>
+    <label>Tags (Hit 'Enter' to add a tag)</label>
+    <input type="text" v-model="tag" @keydown.enter.prevent="handleKeyDown">
+    <div class="tagsContainer">
+      <p v-for="tag in tags" :key="tag" class="tag">
+        {{ tag }} <span class="cross" @click="deleteTag(tag)">&#10006;</span>
+      </p>
+    </div>
+    <div class="align">
+      <button>Add Post</button>
+    </div>
+  </form>
 </template>
 
 <script>
 import { ref } from 'vue';
-/**
- * to use router with composable api we need to import useRouter function from vue-router
- * This is the pattern for using router in composable api 
- * 1 - import useRouter from 'vue-router'
- * 2 - store it in a variable
- * after that we can use it like our normal router -> this.$router
- */
 import { useRouter } from 'vue-router';
 
 export default {
-    setup() {
-        let router = useRouter() //this.$router
-        // console.log(router)
-        let title = ref('')
-        let body = ref('')
-        let tag = ref('')
-        let tags = ref([])
+  setup() {
+    let router = useRouter()
+    let title = ref('')
+    let body = ref('')
+    let tags = ref([])
+    let tag = ref('')
 
-        let handleKeydown = () => {
-            if (!tags.value.includes(tag.value) && tag.value) {
-                tag.value = tag.value.replace(/\s/, '')
-                tags.value.push(tag.value)
-            }
-            tag.value = ''
-        }
-
-        let addPost = async () => {
-            await fetch('http://localhost:3000/posts', {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    title: title.value,
-                    body: body.value,
-                    tags: tags.value
-                })
-            })
-
-            title.value = ''
-            body.value = ''
-            tags.value = []
-
-
-            //redirect user to home page
-            router.push({ name: 'home' })
-        }
-
-        let deleteTag = (del)=>{
-            tags.value = tags.value.filter(tag => tag !== del)
-        }
-
-        return { title, body, tag, handleKeydown, tags, addPost, deleteTag }
+    let handleKeyDown = () => {
+      if (!tags.value.includes(tag.value) && tag.value) {
+        tags.value.push(tag.value)
+        tag.value = ''
+      }
+      else tag.value = ''
     }
+
+    let deleteTag = (tag) =>{
+      tags.value = tags.value.filter(t => t !== tag)
+    }
+
+    let addPost = async() => {
+      await fetch('http://localhost:3000/posts', {
+        method : "POST",
+        headers : {"Content-Type" : "application/json"},
+        body : JSON.stringify({
+          title : title.value,
+          body : body.value,
+          tags : tags.value
+        })
+      })
+      router.push('/')
+    }
+
+    return { title, body, tags, tag, handleKeyDown, addPost, deleteTag }
+  }
 }
 </script>
 
 <style>
 form {
-    max-width: 480px;
-    margin: 0 auto;
-    text-align: left;
-}
-
-input,
-textarea {
-    display: block;
-    margin: 10px 0;
-    width: 100%;
-    box-sizing: border-box;
-    padding: 10px;
-    border: 1px solid #eee;
-}
-
-textarea {
-    height: 160px;
+  max-width: 620px;
+  background: #ddd;
+  padding: 30px;
+  border-radius: 5px;
+  margin: 10px auto;
+  text-align: left;
 }
 
 label {
-    display: inline-block;
-    margin-top: 30px;
-    position: relative;
-    font-size: 20px;
-    color: white;
-    margin-bottom: 10px;
+  display: inline-block;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 0.6rem;
+  color: #aaa;
+  margin: 15px 0 5px 0;
 }
 
-label::before {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 100%;
-    background: #ff8800;
-    position: absolute;
-    z-index: -1;
-    padding-right: 40px;
-    left: -30px;
-    transform: rotateZ(-1.5deg);
+input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  border: none;
+}
+
+textarea {
+  width: 100%;
+  height: 200px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: none;
+  resize: none;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
 }
 
 button {
-    display: block;
-    margin-top: 30px;
-    background: #ff8800;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    font-size: 18px
+  border: none;
+  padding: 10px 20px;
+  margin-top: 20px;
+  background: #00ce89;
+  color: white;
+  border-radius: 5px;
 }
 
-.tagContainer {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 20px;
+.align {
+  text-align: center;
+  margin-top: 20px;
 }
-
-.tag {
-    display: inline-block;
-    padding: 10px 15px;
-    border: 1px solid black;
-    border-radius: 50px;
-    color: black;
-    margin: 0 5px 5px 0;
-    font-weight: bold;
+.tagsContainer{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0 0 0;
+}
+.tag{
+  display: inline-block;
+  padding: 10px 15px;
+  border: 1px solid black;
+  border-radius: 5px;
 }
 .cross{
-    color: red;
-    margin-left: 15px;
-    cursor: pointer;
+  color: red;
+  margin-left: 15px;
+  cursor: pointer;
 }
 </style>

@@ -1,59 +1,65 @@
 <template>
-    <div class="tag-cloud">
-        <h1>Tag Cloud</h1>
-        <div v-for="tag in uniqueTags" :key="tag">
-            <router-link :to="{ name: 'tag', params: { tag } }">{{ tag }}</router-link>
-        </div>
-    </div>
+  <div class="tag-cloud">
+    <span v-for="tag in uniqueTags" :key="tag">
+      <router-link :to="{ name: 'tag', params: { tag } }">
+        {{ tag }}
+      </router-link>
+    </span>
+  </div>
 </template>
 
 <script>
 import { ref } from 'vue';
 
 export default {
-    props: ['posts'],
-    setup(props) {
-        let tags = ref([])
-        props.posts.forEach(post => {
-            // console.log(post)
-            post.tags.forEach(tag => {
-                // console.log(tag)
-                tags.value.push(tag)
-            })
-        })
+  props: ['posts'],
+  setup(props) {
+    let allTags = ref([])
+    props.posts.forEach(post => {
+      post.tags.forEach(tag => {
+        allTags.value.push(tag)
+      })
+    })
 
-        let uniqueTags = tags.value.filter((tag, index, array) => {
-            return array.indexOf(tag) === index
-        })
+    let uniqueTags = allTags.value.filter((tag, index, array) => {
+      return array.indexOf(tag) === index
+    })
 
-        return { uniqueTags }
-    }
+    return { uniqueTags }
+  }
 }
 </script>
 
 <style>
 .tag-cloud {
-    padding: 10px;
-}
-
-.tag-cloud h3 {
-    border-bottom: 1px solid #eee;
-    padding: 16px 8px;
-    color: #444;
-}
-
-.tag-cloud div {
-    display: inline-block;
-    padding: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 10px 0;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-wrap: wrap;
+  /* This allows tags to wrap to the next line */
+  gap: 10px;
+  /* Adds spacing between tags */
 }
 
 .tag-cloud a {
-    color: #ccc;
-    text-decoration: none;
+  padding: 10px 15px;
+  color: black;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin: 5px 0;
+  box-sizing: border-box;
+  transition: background 0.3s;
+  display: inline-block;
+  /* Ensures tags are sized properly */
 }
 
 .tag-cloud a.router-link-active {
-    color: #ff8800;
-    font-weight: bold;
+  background: crimson;
+  border: none;
+  color: white;
+  box-sizing: border-box;
 }
 </style>
