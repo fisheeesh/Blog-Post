@@ -23,7 +23,7 @@ export default {
     let isShow = ref(false)
 
     let cutPostBody = computed(() => {
-      return props.post.body.substring(0, 21) + "..."
+      return props.post.body.substring(0, 21) + "... See more"
     })
 
     return { isShow, cutPostBody }

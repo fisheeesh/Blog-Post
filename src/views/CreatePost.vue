@@ -1,5 +1,7 @@
 <template>
-  <h3>Create Post</h3>
+  <div style="text-align: center; margin-top: 10px;">
+    <h4>Create Post</h4>
+  </div>
   <form @submit.prevent="addPost">
     <label>Title</label>
     <input type="text" v-model="title">
@@ -19,6 +21,7 @@
 </template>
 
 <script>
+import { db, timeStamp } from '@/firebase/config';
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
@@ -43,15 +46,24 @@ export default {
     }
 
     let addPost = async() => {
-      await fetch('http://localhost:3000/posts', {
-        method : "POST",
-        headers : {"Content-Type" : "application/json"},
-        body : JSON.stringify({
-          title : title.value,
-          body : body.value,
-          tags : tags.value
-        })
-      })
+      // await fetch('http://localhost:3000/posts', {
+      //   method : "POST",
+      //   headers : {"Content-Type" : "application/json"},
+      //   body : JSON.stringify({
+      //     title : title.value,
+      //     body : body.value,
+      //     tags : tags.value
+      //   })
+      // })
+      let newPost = {
+        title : title.value,
+        body : body.value,
+        tags : tags.value,
+        created_at : timeStamp()
+      }
+
+      let res = await db.collection('posts').add(newPost)
+      console.log(res)
       router.push('/')
     }
 
@@ -131,5 +143,9 @@ button {
   color: red;
   margin-left: 15px;
   cursor: pointer;
+}
+h4{
+  font-weight: bold;
+  font-size: 1rem;
 }
 </style>
