@@ -1,10 +1,29 @@
 <template>
   <h3>Real Time Database Example</h3>
+  <div v-for="post in posts" :key="post.id">
+    <div>
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.body }}</p>
+    </div><hr>
+  </div>
 </template>
 
 <script>
-export default {
+import { db } from '@/firebase/config';
+import { ref } from 'vue';
 
+
+export default {
+    setup(){
+        let posts = ref([])
+        db.collection('posts').orderBy("created_at", "desc").onSnapshot(snap => {
+            posts.value = snap.docs.map(doc => {
+                return {...doc.data(), id : doc.id}
+            })
+        })
+
+        return { posts }
+    }
 }
 </script>
 
